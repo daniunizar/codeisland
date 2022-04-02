@@ -9,9 +9,9 @@
             <h1 class="text-center">Isla Tucana</h1>
         </div>
      </div>
-     <div class="row">
-         <div class="col">
-             <button class="btn btn-primary" id="btn_newGame" name="btn_newGame">Nueva Partida!</button>
+     <div class="row my-3">
+         <div class="col-12 text-center">
+             <button class="btn btn-primary" id="btn_newGame" name="btn_newGame">¡Nueva Partida!</button>
              <input type="hidden" value="{{route('isla-tucana.newGame')}}" id="newGameRoute">
         </div>
     </div>
@@ -38,18 +38,20 @@
                 <li class="list-group-item historicEvent" id="historic13">13</li>
             </ul>
         </div>
+    </div>
+    <div class="row mt-3">
         <div class="col-6">
             <img src="/storage/toucan.jpg" alt="carta A" name="cardA" id="cardA" width="640" height="426">
-            <h4 id="captionCardA" class="text-center">Taco A</h4>
+            <h4 id="captionCardA" class="text-center mt-2">Taco A</h4>
         </div>
         <div class="col-6">
             <img src="/storage/toucan.jpg" alt="carta B" name="cardB" id="cardB" width="640" height="426">
-            <h4 id="captionCardB" class="text-center">Taco B</h4>
+            <h4 id="captionCardB" class="text-center mt-2">Taco B</h4>
         </div>
     </div>
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-12 d-flex justify-content-center">
-            <button class="btn btn-primary" id="btn_nextRound" name="btn_nextRound" disabled>Siguiente ronda</button>
+            <button class="btn btn-success btn-lg" id="btn_nextRound" name="btn_nextRound" disabled>Siguiente ronda</button>
         </div>
     </div>
  @endsection
@@ -60,10 +62,7 @@
     var historic = new Array();
     document.getElementById('btn_newGame').addEventListener('click', newGame);
     document.getElementById('btn_nextRound').addEventListener('click', nextRound);
-    $(".historicEvent").click(function(event) {
-        historicRound = getRound(event.target.id);
-        seeHistoric(historicRound);
-    });
+    
     var deck = [];
     function newGame(){
         event.preventDefault();
@@ -79,39 +78,41 @@
                 for(var item of result){
                     deck.push(item);
                 }
-                console.log(deck);
                 currentDeck=deck;
                 $('#btn_nextRound').prop('disabled', false);
                 contadorRonda = 0;
+                resetCardImages();
+                resetHistoricColors();
             }});
-    }
-    function startGame(){
-        
-    }
-    function nextRound(){
-        contadorRonda++;
-        $('#contadorRonda').text("Ronda "+contadorRonda);
-        drawCard("A");
-        drawCard("B");
-        console.log(historic);
-    }
-    function drawCard(area){
-        var currentCard = currentDeck.pop();
-        type=getType(currentCard);
-        concept = getConcept(currentCard);
-        $('#card'+area).attr("src","storage/"+type+".jpg");
-        $('#captionCard'+area).text(concept);
-        if(currentDeck.length<=1){
-            endGame();
         }
-        pushHistoric(contadorRonda, area, type);
-    }
-    function endGame(){
-        $('#btn_nextRound').prop('disabled', true);
+        function startGame(){
+            
+        }
+        function nextRound(){
+            contadorRonda++;
+            $('#contadorRonda').text("Ronda "+contadorRonda);
+            drawCard("A");
+            drawCard("B");
+            paintHistoricRounds();
+            paintCurrentRound();
+            addEventListenerToHistoric();
+        }
+        function drawCard(area){
+            var currentCard = currentDeck.pop();
+            type=getType(currentCard);
+            concept = getConcept(currentCard);
+            $('#card'+area).attr("src","storage/"+type+".jpg");
+            $('#captionCard'+area).text(concept);
+            if(currentDeck.length<=1){
+                endGame();
+            }
+            pushHistoric(contadorRonda, area, type);
+        }
+        function endGame(){
+            $('#btn_nextRound').prop('disabled', true);
         $('#contadorRonda').text("Ronda Final");
     }
     function pushHistoric(contadorRonda, area, type){
-        console.log(contadorRonda + " "+ area + " "+ type);
         if(area=="A"){
             historic[contadorRonda]=new Array();
             historic[contadorRonda]['A']=type;
@@ -133,47 +134,81 @@
         $('#captionCard'+'A').text(conceptA);
         $('#card'+'B').attr("src","storage/"+typeB+".jpg");
         $('#captionCard'+'B').text(conceptB);
-        
+        paintLikeFocusedThisRound(round);
     }
     function getType(currentCard){
         switch(currentCard){
             case 'desert':
                 type = "desert";
                 break;
-            case 'forest':
-                type='forest';
-                break;
-            case 'water':
-                type="water";
-                break;
-            case 'mountain':
-                type="mountain";
-                break;
-            case 'wildcard':
-                type="wildcard"
-                break;
-        }
-        return type;
+                case 'forest':
+                    type='forest';
+                    break;
+                    case 'water':
+                        type="water";
+                        break;
+                        case 'mountain':
+                            type="mountain";
+                            break;
+                            case 'wildcard':
+                                type="wildcard"
+                                break;
+                            }
+                            return type;
     }
     function getConcept(currentCard){
         switch(currentCard){
             case 'desert':
                 concept="Desierto";
                 break;
-            case 'forest':
-                concept="Bosque";
-                break;
-            case 'water':
-                concept="Agua";
-                break;
-            case 'mountain':
-                concept="Montaña";
-                break;
-            case 'wildcard':
-                concept="Comodín";
-                break;
-        }
-        return concept;
-    }
-</script>
+                case 'forest':
+                    concept="Bosque";
+                    break;
+                    case 'water':
+                        concept="Agua";
+                        break;
+                        case 'mountain':
+                            concept="Montaña";
+                            break;
+                            case 'wildcard':
+                                concept="Comodín";
+                                break;
+                            }
+                            return concept;
+                        }
+                        function paintHistoricRounds(){
+                            for(let i=1; i<contadorRonda; i++){
+                                $('#historic'+i).removeClass('currentRound');
+                                $('#historic'+i).removeClass('focusedRound');
+                                $('#historic'+i).addClass('historicRound')
+                            }
+                        }
+                        function paintCurrentRound(){
+                            $('#historic'+contadorRonda).addClass('currentRound');
+                            $('#historic'+contadorRonda).addClass('focusedRound');
+                        }
+                        function paintLikeFocusedThisRound(round){
+                            paintHistoricRounds();
+                            $('.historicEvent').removeClass('focusedRound');
+                            $('#historic'+round).removeClass('historicRound');
+                            $('#historic'+round).addClass('focusedRound');
+                        }
+                        function addEventListenerToHistoric(){
+                            $("#historic"+contadorRonda).click(function(event) {
+                                historicRound = getRound(event.target.id);
+                                seeHistoric(historicRound);
+                            });
+                        }
+                        function resetCardImages(){
+                            $('#card'+'A').attr("src","storage/toucan.jpg");
+                            $('#captionCard'+'A').text("Taco A");
+                            $('#card'+'B').attr("src","storage/toucan.jpg");
+                            $('#captionCard'+'B').text("Taco B");
+                        }
+                        function resetHistoricColors(){
+                            $('.historicEvent').removeClass('historicRound');
+                            $('.historicEvent').removeClass('focusedRound');
+                            $('.historicEvent').removeClass('currentRound');
+                        }
+                    </script>
  @endsection

@@ -57,6 +57,7 @@
  @endsection
  @section('js')
 <script>
+    var activeGame = false;
     var contadorRonda;
     var currentDeck = [];
     var historic = new Array();
@@ -66,27 +67,34 @@
     var deck = [];
     function newGame(){
         event.preventDefault();
-        deck=[];
-        currentDeck=[];
-        historic = new Array(2);
-        var route = $('#newGameRoute').val();
-        $.ajax({
-            url: route, 
-            type: 'GET',
-            dataType : 'json',
-            success: function(result){
-                for(var item of result){
-                    deck.push(item);
-                }
-                currentDeck=deck;
-                $('#btn_nextRound').prop('disabled', false);
-                contadorRonda = 0;
-                resetCardImages();
-                resetHistoricColors();
-            }});
+        if(activeGame==true){
+            console.log(confirmNewGame())
+            confirmNewGame();
+        }else{
+            startGame();
+        }
+        
         }
         function startGame(){
-            
+            activeGame=true;
+            deck=[];
+            currentDeck=[];
+            historic = new Array(2);
+            var route = $('#newGameRoute').val();
+            $.ajax({
+                url: route, 
+                type: 'GET',
+                dataType : 'json',
+                success: function(result){
+                    for(var item of result){
+                        deck.push(item);
+                    }
+                    currentDeck=deck;
+                    $('#btn_nextRound').prop('disabled', false);
+                    contadorRonda = 0;
+                    resetCardImages();
+                    resetHistoricColors();
+                }});
         }
         function nextRound(){
             contadorRonda++;
@@ -210,5 +218,31 @@
                             $('.historicEvent').removeClass('focusedRound');
                             $('.historicEvent').removeClass('currentRound');
                         }
+                        function confirmNewGame(){
+                            Swal.fire({
+                            title: '¿Iniciar nueva partida?',
+                            showDenyButton: true,
+                            showCancelButton: true,
+                            confirmButtonText: 'Sí',
+                            denyButtonText: 'No',
+                            customClass: {
+                                actions: 'my-actions',
+                                cancelButton: 'order-1 right-gap',
+                                confirmButton: 'order-2',
+                                denyButton: 'order-3',
+                            }
+                            }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire('Iniciando nueva partida')
+                                startGame();
+                            } else if (result.isDenied) {
+                                return false;
+                            }
+                            })
+                        }
                     </script>
+
+    <script>
+        
+    </script>
  @endsection

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\IslaTucanaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/isla-tucana/newGame', [IslaTucanaController::class, 'newGame'])->name('isla-tucana.newGame');
+Route::get('/isla-tucana', [IslaTucanaController::class, 'index'])->name('isla-tucana');
+

@@ -22,11 +22,21 @@
             </h3>
         </div>
         <div class="col-12">
-            <a href="">1</a>
-            <a href="">2</a>
-            <a href="">3</a>
-            <a href="">4</a>
-            <a href="">5</a>
+            <ul class="list-group list-group-horizontal justify-content-center">
+                <li class="list-group-item historicEvent" id="historic1">1</li>
+                <li class="list-group-item historicEvent" id="historic2">2</li>
+                <li class="list-group-item historicEvent" id="historic3">3</li>
+                <li class="list-group-item historicEvent" id="historic4">4</li>
+                <li class="list-group-item historicEvent" id="historic5">5</li>
+                <li class="list-group-item historicEvent" id="historic6">6</li>
+                <li class="list-group-item historicEvent" id="historic7">7</li>
+                <li class="list-group-item historicEvent" id="historic8">8</li>
+                <li class="list-group-item historicEvent" id="historic9">9</li>
+                <li class="list-group-item historicEvent" id="historic10">10</li>
+                <li class="list-group-item historicEvent" id="historic11">11</li>
+                <li class="list-group-item historicEvent" id="historic12">12</li>
+                <li class="list-group-item historicEvent" id="historic13">13</li>
+            </ul>
         </div>
         <div class="col-6">
             <img src="/storage/toucan.jpg" alt="carta A" name="cardA" id="cardA" width="640" height="426">
@@ -47,13 +57,19 @@
 <script>
     var contadorRonda;
     var currentDeck = [];
+    var historic = new Array();
     document.getElementById('btn_newGame').addEventListener('click', newGame);
     document.getElementById('btn_nextRound').addEventListener('click', nextRound);
+    $(".historicEvent").click(function(event) {
+        historicRound = getRound(event.target.id);
+        seeHistoric(historicRound);
+    });
     var deck = [];
     function newGame(){
         event.preventDefault();
         deck=[];
         currentDeck=[];
+        historic = new Array(2);
         var route = $('#newGameRoute').val();
         $.ajax({
             url: route, 
@@ -61,7 +77,6 @@
             dataType : 'json',
             success: function(result){
                 for(var item of result){
-                    // deck[item.concept]=item.quantity;
                     deck.push(item);
                 }
                 console.log(deck);
@@ -78,9 +93,49 @@
         $('#contadorRonda').text("Ronda "+contadorRonda);
         drawCard("A");
         drawCard("B");
+        console.log(historic);
     }
     function drawCard(area){
         var currentCard = currentDeck.pop();
+        type=getType(currentCard);
+        concept = getConcept(currentCard);
+        $('#card'+area).attr("src","storage/"+type+".jpg");
+        $('#captionCard'+area).text(concept);
+        if(currentDeck.length<=1){
+            endGame();
+        }
+        pushHistoric(contadorRonda, area, type);
+    }
+    function endGame(){
+        $('#btn_nextRound').prop('disabled', true);
+        $('#contadorRonda').text("Ronda Final");
+    }
+    function pushHistoric(contadorRonda, area, type){
+        console.log(contadorRonda + " "+ area + " "+ type);
+        if(area=="A"){
+            historic[contadorRonda]=new Array();
+            historic[contadorRonda]['A']=type;
+        }
+        if(area=="B"){
+            historic[contadorRonda]['B']=type;
+        }
+    }
+    function getRound(bruteRound){
+        round = bruteRound.replace("historic", "");
+        return round;
+    }
+    function seeHistoric(round){
+        let typeA=historic[round]['A'];
+        let typeB=historic[round]['B'];
+        let conceptA=getConcept(historic[round]['A'])
+        let conceptB=getConcept(historic[round]['B'])
+        $('#card'+'A').attr("src","storage/"+typeA+".jpg");
+        $('#captionCard'+'A').text(conceptA);
+        $('#card'+'B').attr("src","storage/"+typeB+".jpg");
+        $('#captionCard'+'B').text(conceptB);
+        
+    }
+    function getType(currentCard){
         switch(currentCard){
             case 'desert':
                 type = "desert";
@@ -98,20 +153,27 @@
                 type="wildcard"
                 break;
         }
-        $('#card'+area).attr("src","storage/"+type+".jpg");
-        $('#captionCard'+area).text(type);
-        console.log(deck);
-        console.log(currentCard);
-        if(currentDeck.length<=1){
-            endGame();
-        }
+        return type;
     }
-    function endGame(){
-        console.log("FIN DEL JUEGO");
-        console.log("La carta sobrante es: "+currentDeck);
-        $('#btn_nextRound').prop('disabled', true);
-        $('#contadorRonda').text("Ronda Final");
-
+    function getConcept(currentCard){
+        switch(currentCard){
+            case 'desert':
+                concept="Desierto";
+                break;
+            case 'forest':
+                concept="Bosque";
+                break;
+            case 'water':
+                concept="Agua";
+                break;
+            case 'mountain':
+                concept="Montaña";
+                break;
+            case 'wildcard':
+                concept="Comodín";
+                break;
+        }
+        return concept;
     }
 </script>
  @endsection

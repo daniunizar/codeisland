@@ -109,7 +109,7 @@
             var currentCard = currentDeck.pop();
             type=getType(currentCard);
             concept = getConcept(currentCard);
-            $('#card'+area).attr("src","storage/"+type+".jpg");
+            $('#card'+area).attr("src","/storage/"+type+".jpg");
             $('#captionCard'+area).text(concept);
             if(currentDeck.length<=1){
                 endGame();
@@ -138,9 +138,9 @@
         let typeB=historic[round]['B'];
         let conceptA=getConcept(historic[round]['A'])
         let conceptB=getConcept(historic[round]['B'])
-        $('#card'+'A').attr("src","storage/"+typeA+".jpg");
+        $('#card'+'A').attr("src","/storage/"+typeA+".jpg");
         $('#captionCard'+'A').text(conceptA);
-        $('#card'+'B').attr("src","storage/"+typeB+".jpg");
+        $('#card'+'B').attr("src","/storage/"+typeB+".jpg");
         $('#captionCard'+'B').text(conceptB);
         paintLikeFocusedThisRound(round);
     }
@@ -208,9 +208,9 @@
                             });
                         }
                         function resetCardImages(){
-                            $('#card'+'A').attr("src","storage/toucan.jpg");
+                            $('#card'+'A').attr("src","/storage/toucan.jpg");
                             $('#captionCard'+'A').text("Taco A");
-                            $('#card'+'B').attr("src","storage/toucan.jpg");
+                            $('#card'+'B').attr("src","/storage/toucan.jpg");
                             $('#captionCard'+'B').text("Taco B");
                         }
                         function resetHistoricColors(){

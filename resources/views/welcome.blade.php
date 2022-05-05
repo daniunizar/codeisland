@@ -66,6 +66,16 @@
                 </div>
                 <div class="col">
                     <div class="card h-100">
+                        <img src="/storage/word.jpg" class="card-img-top" alt="Adivina la palabra">
+                        <div class="card-body">
+                            <h5 class="card-title">Adivina la palabra</h5>
+                            <p class="card-text">Aplicación inspirada en <b><i>Wordle</i></b>, basada en la adivinación de palabras en un número limitado de intentos</p>
+                            <a href="" class="btn btn-primary">Entrar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
                         <img src="/storage/rpg.jpg" class="card-img-top" alt="Generador de personajes de Pathfinder">
                         <div class="card-body">
                             <h5 class="card-title">Generador personajes Pathfinder</h5>

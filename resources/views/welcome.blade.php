@@ -70,7 +70,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Adivina la palabra</h5>
                             <p class="card-text">Aplicación inspirada en <b><i>Wordle</i></b>, basada en la adivinación de palabras en un número limitado de intentos</p>
-                            <a href="" class="btn btn-primary">Entrar</a>
+                            <a href="{{route('adivina-la-palabra')}}" class="btn btn-primary">Entrar</a>
                         </div>
                     </div>
                 </div>

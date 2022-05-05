@@ -10,6 +10,11 @@
         </div>
      </div>
      <div class="row my-3">
+         <div class="col-12 text-end">
+             <a href="/" class="btn btn-secondary">Volver</a>
+        </div>
+    </div>
+     <div class="row my-3">
          <div class="col-12 text-center">
              <button class="btn btn-primary" id="btn_newGame" name="btn_newGame">¡Nueva Partida!</button>
              <input type="hidden" value="{{route('isla-tucana.newGame')}}" id="newGameRoute">

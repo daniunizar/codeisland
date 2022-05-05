@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IslaTucanaController;
+use App\Http\Controllers\AdivinaLaPalabra\AdivinaLaPalabraController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,4 +20,6 @@ Route::get('/', function () {
 
 Route::get('/isla-tucana/newGame', [IslaTucanaController::class, 'newGame'])->name('isla-tucana.newGame');
 Route::get('/isla-tucana', [IslaTucanaController::class, 'index'])->name('isla-tucana');
+Route::get('/adivina-la-palabra/newGame', [AdivinaLaPalabraController::class, 'newGame'])->name('adivina-la-palabra.newGame');
+Route::get('/adivina-la-palabra', [AdivinaLaPalabraController::class, 'index'])->name('adivina-la-palabra');
 

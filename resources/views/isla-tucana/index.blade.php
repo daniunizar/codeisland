@@ -10,6 +10,11 @@
         </div>
      </div>
      <div class="row my-3">
+         <div class="col-12 text-end">
+             <a href="/" class="btn btn-secondary">Volver</a>
+        </div>
+    </div>
+     <div class="row my-3">
          <div class="col-12 text-center">
              <button class="btn btn-primary" id="btn_newGame" name="btn_newGame">¡Nueva Partida!</button>
              <input type="hidden" value="{{route('isla-tucana.newGame')}}" id="newGameRoute">
@@ -40,11 +45,11 @@
         </div>
     </div>
     <div class="row mt-3">
-        <div class="col-6">
+        <div class="col-xxl-6 overflow-hidden">
             <img src="/storage/toucan.jpg" alt="carta A" name="cardA" id="cardA" width="640" height="426">
             <h4 id="captionCardA" class="text-center mt-2">Taco A</h4>
         </div>
-        <div class="col-6">
+        <div class="col-xxl-6 overflow-hidden">
             <img src="/storage/toucan.jpg" alt="carta B" name="cardB" id="cardB" width="640" height="426">
             <h4 id="captionCardB" class="text-center mt-2">Taco B</h4>
         </div>

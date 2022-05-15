@@ -45,11 +45,11 @@
         </div>
     </div>
     <div class="row mt-3">
-        <div class="col-xxl-6 overflow-hidden">
+        <div class="col-xxl-6 text-center overflow-hidden">
             <img src="/storage/toucan.jpg" alt="carta A" name="cardA" id="cardA" width="640" height="426">
             <h4 id="captionCardA" class="text-center mt-2">Taco A</h4>
         </div>
-        <div class="col-xxl-6 overflow-hidden">
+        <div class="col-xxl-6 text-center overflow-hidden">
             <img src="/storage/toucan.jpg" alt="carta B" name="cardB" id="cardB" width="640" height="426">
             <h4 id="captionCardB" class="text-center mt-2">Taco B</h4>
         </div>
